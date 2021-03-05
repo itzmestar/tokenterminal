@@ -1,0 +1,9 @@
+__title__ = 'tokenterminal'
+__description__ = 'Unofficial Token Terminal API client.'
+__url__ = 'https://github.com/itzmestar/tokenterminal'
+__version__ = '0.0.1'
+__build__ = 0x010001
+__author__ = 'Tarique Anwer'
+__author_email__ = 'itzmetariq@gmail.com'
+__license__ = 'Apache License 2.0'
+__copyright__ = 'Copyright 2021 Tarique Anwer'
