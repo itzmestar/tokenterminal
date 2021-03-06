@@ -8,6 +8,7 @@
 -------
 
 ### Unofficial [Token Terminal API](https://www.tokenterminal.com/) client in python
+### Still in Testing phase. Please raise any issues you see
 
 For more information, see [Token Terminal API Documentation](https://docs.tokenterminal.com/)
 
