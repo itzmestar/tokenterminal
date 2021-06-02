@@ -8,8 +8,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-![Build](https://github.com/itzmestar/tokenterminal/workflows/Build/badge.svg)
-
+[![Build](https://github.com/itzmestar/tokenterminal/actions/workflows/python-package.yml/badge.svg?branch=main)](https://github.com/itzmestar/tokenterminal/actions/workflows/python-package.yml)
 
 -------
 
