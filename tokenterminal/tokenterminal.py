@@ -23,7 +23,7 @@ class TokenTerminal:
         """
         self.key = key
         self.session = requests.Session()
-        self.session.headers.update({'Authorization': 'Token {}'.format(key)})
+        self.session.headers.update({'Authorization': 'Bearer {}'.format(key)})
 
     def _get(self, endpoint, params=None, stream=False):
         """
@@ -33,136 +33,53 @@ class TokenTerminal:
         :return:
         """
         url = BASE_URL + endpoint
-        return self.session.get(url, params=params, timeout=30, stream=stream)
+        response = self.session.get(url, params=params, timeout=30, stream=stream)
+        return response.json()
 
-    def retrieve_market_caps(self, data_version=None):
+    def get_all_projects(self):
         """
-        Returns historical, fully-diluted market cap data. Supports only daily granularity for now.
+        Returns an overview of latest data for all projects, ranging from metadata such as
+        launch dates, logos brand colors and Twitter followers to more fundamental metrics
+        such as Revenue, GMV, TVL and P/S ratios.
+        The project_id can be used as a Path parameter in subsequent endpoints.
 
-        :param data_version: Use this to specify which version of the data you want. The format is YYYY-MM-DD,
-                e.g. 2020-12-07. Defaults to latest if not specified.
+        The data is updated every 10 minutes.
         :return:
         """
-        path = '/v1/metrics/financial/market_caps'
+        path = '/v1/projects'
 
-        params = {
-            'redirect': True,
-            'data_version': data_version
-        }
+        response = self._get(path)
+        return response
 
-        response = self._get(path, params=params, stream=True)
-        for line in response.iter_lines():
-            data = json.loads(line.decode())
-            yield data
-
-    def retrieve_prices(self, data_version=None):
+    def get_historical_metrics(self, project_id, granularity='project', interval='daily'):
         """
-        Returns historical price data. Supports only daily granularity for now.
+        Returns project's historical metrics. The project_id can be fetched from the v1/projects endpoint.
+        The datetime granularity can be controlled with interval, omitting it will default to daily.
 
-        :param data_version: Use this to specify which version of the data you want. The format is YYYY-MM-DD,
-                e.g. 2020-12-07. Defaults to latest if not specified.
+        The metric data of a given project can be split into components. In Uniswap's case a component is
+        the trading pair (e.g. USDC-WETH or DAI-WETH), in Compound's case it's the lending market (e.g. ETH,
+        USDC or WBTC).
+        By choosing top10 or component for data_granularity, the composition of a given metric can be examined
+        more thoroughly. Project's that have top10 or component data can be seen from /v1/projects's
+        metric_availability field.
+
+        By default project-level data is shown, ignoring component-level data altogether.
+
+        The data is updated once a day.
+
+        :param project_id: Project's id, can be fetched from v1/projects endpoint.
+        :param granularity: The granularity of data, options are project, top10 or component.
+                Defaults to project.
+        :param interval: The interval historical data is given, options are daily or monthly.
+                Defaults to daily.
         :return:
         """
-        path = '/v1/metrics/financial/prices'
+        path = f'/v1/projects/{project_id}/metrics'
 
         params = {
-            'redirect': True,
-            'data_version': data_version
+            'data_granularity': granularity,
+            'interval': interval
         }
 
-        response = self._get(path, params=params, stream=True)
-        for line in response.iter_lines():
-            data = json.loads(line.decode())
-            yield data
-
-    def retrieve_price_to_sales_ratios(self, data_version=None):
-        """
-        Returns historical price-to-sales data. Supports only daily granularity for now.
-
-        :param data_version: Use this to specify which version of the data you want. The format is YYYY-MM-DD,
-                e.g. 2020-12-07. Defaults to latest if not specified.
-        :return:
-        """
-        path = '/v1/metrics/financial/ps'
-
-        params = {
-            'redirect': True,
-            'data_version': data_version
-        }
-
-        response = self._get(path, params=params, stream=True)
-        for line in response.iter_lines():
-            data = json.loads(line.decode())
-            yield data
-
-    def retrieve_tvls(self, data_version=None):
-        """
-        Returns historical TVL data. Supports only daily granularity for now.
-
-        :param data_version: Use this to specify which version of the data you want. The format is YYYY-MM-DD,
-                e.g. 2020-12-07. Defaults to latest if not specified.
-        :return:
-        """
-        path = '/v1/metrics/financial/tvls'
-
-        params = {
-            'redirect': True,
-            'data_version': data_version
-        }
-
-        response = self._get(path, params=params, stream=True)
-        for line in response.iter_lines():
-            data = json.loads(line.decode())
-            yield data
-
-    def retrieve_gmvs(self, project_id=None, granularity=None, data_version=None):
-        """
-        Returns historical GMV data. Supports only daily granularity for now.
-
-        :param project_id: Use this to get a deep-dive to a particular project. Data is provided on a component-level,
-                e.g. GMV of each Balancer pool. Ignored by default.
-        :param granularity: Use this to specify the interval at which data is provided.
-                Defaults to daily if not specified.
-        :param data_version: Use this to specify which version of the data you want. The format is YYYY-MM-DD,
-                e.g. 2020-12-07. Defaults to latest if not specified.
-        :return:
-        """
-        path = '/v1/metrics/financial/gmvs'
-
-        params = {
-            'redirect': True,
-            'project_id': project_id,
-            'granularity': granularity,
-            'data_version': data_version
-        }
-
-        response = self._get(path, params=params, stream=True)
-        for line in response.iter_lines():
-            data = json.loads(line.decode())
-            yield data
-
-    def retrieve_revenues(self, project_id=None, granularity=None, data_version=None):
-        """
-        Returns historical revenue data. Supports only daily granularity for now.
-
-        :param project_id: Use this to get a deep-dive to a particular project. Data is provided on a component-level,
-                e.g. GMV of each Balancer pool. Ignored by default.
-        :param granularity: Use this to specify the interval at which data is provided.
-                Defaults to daily if not specified.
-        :param data_version: Use this to specify which version of the data you want. The format is YYYY-MM-DD,
-                e.g. 2020-12-07. Defaults to latest if not specified.
-        :return:
-        """
-        path = '/v1/metrics/financial/revenues'
-
-        params = {
-            'redirect': True,
-            'project_id': project_id,
-            'granularity': granularity,
-            'data_version': data_version
-        }
-
-        response = self._get(path, params=params, stream=True)
-        for line in response.iter_lines():
-            data = json.loads(line.decode())
-            yield data
+        response = self._get(path, params=params)
+        return response
