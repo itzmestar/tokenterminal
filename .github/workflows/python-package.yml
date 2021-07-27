@@ -41,5 +41,4 @@ jobs:
       run: |
         pytest --cov=tokenterminal
     - name: Upload coverage to Codecov
-      uses: actions/checkout@main
       uses: codecov/codecov-action@v2
