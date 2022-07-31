@@ -46,15 +46,15 @@ class TokenTerminal:
         The data is updated every 10 minutes.
         :return:
         """
-        path = '/v1/projects'
+        path = '/v2/projects'
 
         response = self._get(path)
         return response
 
-    def get_historical_metrics(self, project_id, granularity='project', interval='daily'):
+    def get_historical_metrics(self, project_id, timestamp_granularity='daily', since=""):
         """
         Returns project's historical metrics. The project_id can be fetched from the v1/projects endpoint.
-        The datetime granularity can be controlled with interval, omitting it will default to daily.
+        The datetime granularity can be controlled with timestamp_granularity, omitting it will default to daily.
 
         The metric data of a given project can be split into components. In Uniswap's case a component is
         the trading pair (e.g. USDC-WETH or DAI-WETH), in Compound's case it's the lending market (e.g. ETH,
@@ -68,18 +68,21 @@ class TokenTerminal:
         The data is updated once a day.
 
         :param project_id: Project's id, can be fetched from v1/projects endpoint.
-        :param granularity: The granularity of data, options are project, top10 or component.
-                Defaults to project.
-        :param interval: The interval historical data is given, options are daily or monthly.
+        :param timestamp_granularity: The interval historical data is given, options are daily or monthly.
                 Defaults to daily.
+        :param since: The date since when to get the data from with format YYYY-MM-DD.
+                Defaults to "" which returns all data available.
         :return:
         """
-        path = f'/v1/projects/{project_id}/metrics'
+        path = f'/v2/projects/{project_id}/metrics'
 
         params = {
-            'data_granularity': granularity,
-            'interval': interval
+            'timestamp_granularity': timestamp_granularity,
         }
+        
+        if since:
+            params['since'] = since
 
         response = self._get(path, params=params)
         return response
+        
