@@ -100,3 +100,21 @@ class TokenTerminal:
         response = self._get(path, params=params)
         return response
 
+    def get_market_sectors(self):
+        """
+        Use this method to retrieve a list of all available market sectors that are available on the API.
+        :return:
+        """
+        path = f'/v2/market-sectors'
+
+        response = self._get(path)
+        return response
+
+    def get_market_sector(self, market_sector_id: str):
+        """
+        Use this method to retrieve a market sector metadata and the list of all projects belonging to market sector.
+        """
+        path = f'/v2/market-sectors/{market_sector_id}'
+
+        response = self._get(path)
+        return response
