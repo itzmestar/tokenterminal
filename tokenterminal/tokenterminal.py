@@ -172,3 +172,272 @@ class TokenTerminal:
 
         response = self._get(path, params=params)
         return response
+
+    def get_blockchain_comparison_dataset(
+            self,
+            chain_ids: list = None,
+            order_by: str = None,
+            order_direction: str = None,
+            limit: int = None
+    ):
+        """
+        Use this method to retrieve the Blockchain comparison dataset.
+
+        You can get the whole dataset by omiting all parameters.
+        :param chain_ids:
+        :param order_by:
+        :param order_direction:
+        :param limit:
+        :return:
+        """
+        path = f'/v2/datasets/blockchain_comparison'
+
+        params = {
+            'chain_ids': chain_ids,
+            'order_by': order_by,
+            'order_direction': order_direction,
+            'limit': limit
+        }
+
+        response = self._get(path, params=params)
+        return response
+
+    def get_cohort_analysis_dataset(
+            self,
+            project_ids: list = None,
+            market_sector_ids: list = None,
+            order_by: str = None,
+            order_direction: str = None,
+            limit: int = None
+    ):
+        """
+        Use this method to retrieve the Cohort analysis dataset.
+
+        You can get the whole dataset by omiting all parameters.
+        :param project_ids:
+        :param market_sector_ids:
+        :param order_by:
+        :param order_direction:
+        :param limit:
+        :return:
+        """
+        path = f'/v2/datasets/cohort_analysis'
+
+        params = {
+            'project_ids': project_ids,
+            'market_sector_ids': market_sector_ids,
+            'order_by': order_by,
+            'order_direction': order_direction,
+            'limit': limit
+        }
+
+        response = self._get(path, params=params)
+        return response
+
+    def get_crypto_screener_dataset(
+            self,
+            project_ids: list = None,
+            market_sector_ids: list = None,
+            order_by: str = None,
+            order_direction: str = None,
+            limit: int = None
+    ):
+        """
+        Use this method to retrieve the Crypto screener dataset. You can get the whole dataset by omiting all parameters.
+
+        Metrics use the following pattern in the response body: <metric_id>_<interval>_<aggregation>.
+
+        Metric IDs are the same as the ones used in the /v2/metrics endpoint.
+        Intervals are 24h, 7d, 30d, 90d, 180d, 365d, max.
+        Aggregations are trend, change, avg, ath, atl.
+        :param project_ids:
+        :param market_sector_ids:
+        :param order_by:
+        :param order_direction:
+        :param limit:
+        :return:
+        """
+        path = f'/v2/datasets/crypto_screener'
+
+        params = {
+            'project_ids': project_ids,
+            'market_sector_ids': market_sector_ids,
+            'order_by': order_by,
+            'order_direction': order_direction,
+            'limit': limit
+        }
+
+        response = self._get(path, params=params)
+        return response
+
+    def get_insider_transactions_dataset(
+            self,
+            project_ids: list = None,
+            chain_ids: list = None,
+            order_by: str = None,
+            order_direction: str = None,
+            limit: int = None
+    ):
+        """
+        Use this method to retrieve the Insider transactions dataset.
+
+        You can get the whole dataset by omiting all parameters.
+        :param project_ids:
+        :param chain_ids:
+        :param order_by:
+        :param order_direction:
+        :param limit:
+        :return:
+        """
+        path = f'/v2/datasets/insider_transactions'
+
+        params = {
+            'project_ids': project_ids,
+            'chain_ids': chain_ids,
+            'order_by': order_by,
+            'order_direction': order_direction,
+            'limit': limit
+        }
+
+        response = self._get(path, params=params)
+        return response
+
+    def get_top_tokenholders_dataset(
+            self,
+            project_ids: list = None,
+            chain_ids: list = None,
+            market_sector_ids: list = None,
+            order_by: str = None,
+            order_direction: str = None,
+            limit: int = None
+    ):
+        """
+        Use this method to retrieve the Top tokenholders dataset.
+
+        You can get the whole dataset by omiting all parameters.
+        :param project_ids:
+        :param chain_ids:
+        :param market_sector_ids:
+        :param order_by:
+        :param order_direction:
+        :param limit:
+        :return:
+        """
+        path = f'/v2/datasets/top_tokenholders'
+
+        params = {
+            'project_ids': project_ids,
+            'chain_ids': chain_ids,
+            'market_sector_ids': market_sector_ids,
+            'order_by': order_by,
+            'order_direction': order_direction,
+            'limit': limit
+        }
+
+        response = self._get(path, params=params)
+        return response
+
+    def get_project_contracts_dataset(
+            self,
+            project_ids: list = None,
+            chain_ids: list = None,
+            market_sector_ids: list = None,
+            order_by: str = None,
+            order_direction: str = None,
+            limit: int = None
+    ):
+        """
+        Use this method to retrieve the Project contracts dataset.
+
+        You can get the whole dataset by omiting all parameters.
+        :param project_ids:
+        :param chain_ids:
+        :param market_sector_ids:
+        :param order_by:
+        :param order_direction:
+        :param limit:
+        :return:
+        """
+        path = f'/v2/datasets/project_contracts'
+
+        params = {
+            'project_ids': project_ids,
+            'chain_ids': chain_ids,
+            'market_sector_ids': market_sector_ids,
+            'order_by': order_by,
+            'order_direction': order_direction,
+            'limit': limit
+        }
+
+        response = self._get(path, params=params)
+        return response
+
+    def get_stablecoins_dataset(
+            self,
+            project_ids: list = None,
+            chain_ids: list = None,
+            market_sector_ids: list = None,
+            order_by: str = None,
+            order_direction: str = None,
+            limit: int = None
+    ):
+        """
+        Use this method to retrieve the Stablecoins dataset.
+
+        You can get the whole dataset by omiting all parameters.
+        :param project_ids:
+        :param chain_ids:
+        :param market_sector_ids:
+        :param order_by:
+        :param order_direction:
+        :param limit:
+        :return:
+        """
+        path = f'/v2/datasets/stablecoins'
+
+        params = {
+            'project_ids': project_ids,
+            'chain_ids': chain_ids,
+            'market_sector_ids': market_sector_ids,
+            'order_by': order_by,
+            'order_direction': order_direction,
+            'limit': limit
+        }
+
+        response = self._get(path, params=params)
+        return response
+
+    def get_trending_contracts_dataset(
+            self,
+            project_ids: list = None,
+            chain_ids: list = None,
+            market_sector_ids: list = None,
+            order_by: str = None,
+            order_direction: str = None,
+            limit: int = None
+    ):
+        """
+        Use this endpoint to retrieve the Trending contracts dataset.
+
+        You can get the whole dataset by omiting all parameters.
+        :param project_ids:
+        :param chain_ids:
+        :param market_sector_ids:
+        :param order_by:
+        :param order_direction:
+        :param limit:
+        :return:
+        """
+        path = f'/v2/datasets/trending_contracts'
+
+        params = {
+            'project_ids': project_ids,
+            'chain_ids': chain_ids,
+            'market_sector_ids': market_sector_ids,
+            'order_by': order_by,
+            'order_direction': order_direction,
+            'limit': limit
+        }
+
+        response = self._get(path, params=params)
+        return response
