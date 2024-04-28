@@ -1,7 +1,7 @@
 __title__ = 'tokenterminal'
 __description__ = 'Unofficial Token Terminal API client.'
 __url__ = 'https://github.com/itzmestar/tokenterminal'
-__version__ = '1.0.1'
+__version__ = '2.0.0'
 __build__ = 0x010001
 __author__ = 'Tarique Anwer'
 __author_email__ = 'itzmetariq@gmail.com'
