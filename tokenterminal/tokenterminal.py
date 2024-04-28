@@ -118,3 +118,57 @@ class TokenTerminal:
 
         response = self._get(path)
         return response
+
+    def get_all_metrics(self):
+        """
+        Use this method to retrieve a list of all metrics available on the API.
+        :return:
+        """
+        path = f'/v2/metrics'
+
+        response = self._get(path)
+        return response
+
+    def get_projects_metric_data(self, metric_id: str, project_ids: list = None, start: str = None, end: str = None):
+        """
+        Use this method to retrieve metric data for multiple projects.
+        You can get specific metric for all projects by omiting project_ids or using project_ids=all.
+        :param metric_id: Allows you to select one of the metrics available. The full list is available on the metrics endpoint
+        :param project_ids: Allows you to select one or more of the projects available for a specific metric.
+                            When including multiple projects, separate each one with a comma. Example: aave,uniswap
+        :param start: Allows you to select the start date for the query. If no start is selected,
+                        the query defaults to launch date or the first date for which there is data available for the chosen metric(s).
+        :param end: Allows you to select the end date for the query. If no end is selected,
+                    the query defaults to the latest date for which there is data available for the chosen metric(s).
+        :return:
+        """
+        path = f'/v2/metrics/{metric_id}'
+
+        params = {
+            'project_ids': project_ids,
+            'start': start,
+            'end': end,
+        }
+
+        response = self._get(path, params=params)
+        return response
+
+    def get_projects_metric_aggregations(self, project_ids: list[str], metric_ids: list = None):
+        """
+        Use this method to retrieve metric aggregations for multiple projects.
+
+        You can get all aggregations for all projects by omiting project_ids and metric_ids parameters.
+        Fetching all projects or metrics you can omit the parameter or using parameter value all.
+        :param project_ids:
+        :param metric_ids:
+        :return:
+        """
+        path = f'/v2/metrics/metric-aggregations'
+
+        params = {
+            'project_ids': project_ids,
+            'metric_ids': metric_ids
+        }
+
+        response = self._get(path, params=params)
+        return response
